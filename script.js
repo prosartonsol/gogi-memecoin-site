@@ -1,5 +1,22 @@
 document.getElementById('year').textContent = new Date().getFullYear();
 
+const heroGogi = document.querySelector('.hero-art img');
+const heroOptions = [
+  { src: 'assets/gogi-running.gif', alt: 'Gogi running into the future' },
+  { src: 'assets/gogi-celebrating.gif', alt: 'Gogi celebrating' },
+  { src: 'assets/gogi-hyped.gif', alt: 'Excited Gogi' },
+  { src: 'assets/gogi-eating.gif', alt: 'Gogi enjoying a snack' },
+  { src: 'assets/gogi-crying.gif', alt: 'Gogi having a big feeling' },
+  { src: 'assets/gogi-tired.gif', alt: 'Tired Gogi' }
+];
+let previousHero = '';
+try { previousHero = sessionStorage.getItem('gogi-hero-gif') || ''; } catch (error) { /* storage may be unavailable */ }
+const availableHeroes = heroOptions.filter((hero) => hero.src !== previousHero);
+const selectedHero = availableHeroes[Math.floor(Math.random() * availableHeroes.length)];
+heroGogi.src = selectedHero.src;
+heroGogi.alt = selectedHero.alt;
+try { sessionStorage.setItem('gogi-hero-gif', selectedHero.src); } catch (error) { /* storage may be unavailable */ }
+
 const activityButton = document.getElementById('activity-button');
 const funOutput = document.getElementById('fun-output');
 const activities = [
