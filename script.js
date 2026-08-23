@@ -58,15 +58,19 @@ if (canFollowCursor) {
   let targetY = -100;
   let currentX = targetX;
   let currentY = targetY;
+  let previousX = targetX;
   window.addEventListener('pointermove', (event) => {
     targetX = event.clientX + 18;
     targetY = event.clientY + 18;
     cursorGogi.classList.add('is-visible');
   });
+  window.addEventListener('pointerleave', () => cursorGogi.classList.remove('is-visible'));
   const follow = () => {
     currentX += (targetX - currentX) * 0.14;
     currentY += (targetY - currentY) * 0.14;
-    cursorGogi.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+    const angle = Math.max(-8, Math.min(8, (currentX - previousX) * 0.7));
+    cursorGogi.style.transform = `translate3d(${currentX}px, ${currentY}px, 0) rotate(${angle}deg)`;
+    previousX = currentX;
     window.requestAnimationFrame(follow);
   };
   follow();
